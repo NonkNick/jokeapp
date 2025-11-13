@@ -46,3 +46,14 @@ Beschrijving van de app en de functionaliteit
 Gebruikte technieken/tools (Vue, TS, Router, JokeAPI, etc.)
 Installatie-instructies (npm install / run)
 Screenshots (optioneel)
+
+---
+## Plan
+### Views
+- About
+- Favourites
+- NewJokes
+- OwnJokes
+### Components
+- Joke.vue
+- 
