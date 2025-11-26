@@ -6,9 +6,15 @@ import Sidebar from "./components/Sidebar.vue";
 </script>
 
 <template>
-  <Sidebar/>
-  <router-view/>
-  <Footer/>
+  <div class="h-screen flex">
+    <Sidebar />
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <main class="flex-1 overflow-auto p-6">
+        <router-view/>
+      </main>
+      <Footer />
+    </div>
+  </div>
 </template>
 
 <style scoped>

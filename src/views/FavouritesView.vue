@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import JokeContainer from "../components/JokeContainer.vue";
 import Joke from "../components/Joke.vue";
 </script>
 

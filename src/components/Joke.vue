@@ -1,42 +1,69 @@
 <template>
-  <div class="joke">
-    <h1>
-      {{ joke }}
-    </h1>
-    <rating/>
+  <div class="joke-card">
+    <div class="joke-text">
+      <h3>{{ startText }}</h3>
+
+      <h3 class="spoiler" v-if="isTwoPart">
+        {{ deliveryText }}
+      </h3>
+
+      <rating/>
+    </div>
   </div>
 </template>
 
+
 <script setup lang="ts">
-import {ref, onMounted} from "vue";
-import {JokeAPI} from "@bitstep/jokeapi";
+import { computed, onMounted } from "vue";
+import { useJoke } from "../composable/useJoke";
 import Rating from "./Rating.vue";
 
-const joke = ref("");
+const { joke, loading, error, fetchJoke } = useJoke();
 
-onMounted(async () => {
-  const jokeClient = new JokeAPI();
-  const data = await jokeClient.getRandomJoke();
+onMounted(() => {
+  fetchJoke();
+});
 
-  // Single-part or two-part joke
-  console.log(data);
-  joke.value = data.joke ?? `${data.setup} — ${data.delivery}`;
-  // joke.value = JSON.stringify(data, null, 2);
+const isTwoPart = computed(() => joke.value?.type === "twopart");
+
+const startText = computed(() => {
+  const j = joke.value;
+  if (!j) return "";
+  return isTwoPart.value ? j.setup : j.joke;
+});
+
+const deliveryText = computed(() => {
+  return isTwoPart.value ? joke.value?.delivery ?? "" : "";
 });
 </script>
 
+
 <style scoped>
 @reference "tailwindcss";
-.joke {
-  @apply flex flex-col w-2/6 h-100;
+
+.joke-text {
+  @apply overflow-auto;
   background-color: rgba(76, 175, 80, 0.1); /* Lichte groene achtergrond (primaire kleur met transparantie) */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-
 }
 
-.joke h1 {
+.joke-card {
+  @apply flex flex-col;
+  min-width: 250px; /* prevents shrinking on wider screens */
+  max-width: 100%;  /* allow full width in small screens */
+}
+
+.joke-text h1 {
   @apply text-center break-words text-2xl;
+}
+
+.spoiler {
+  @apply blur;
+}
+
+.spoiler:hover {
+  @apply blur-none;
 }
 </style>
