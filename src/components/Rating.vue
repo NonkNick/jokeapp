@@ -4,7 +4,7 @@
         v-for="(star, index) in rating"
         :key="index"
         @click="toggle(index)"
-        class="w-full h-full"
+        class="w-full h-full cursor-pointer"
         :class="star.active ? 'active' : 'inactive'"
     />
   </div>

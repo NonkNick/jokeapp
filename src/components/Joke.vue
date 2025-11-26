@@ -1,22 +1,30 @@
 <template>
-  <div class="joke-card">
-    <div class="joke-text">
+  <div class="joke-card relative p-4 bg-green-100 rounded-lg shadow-md">
+    <favourite class="absolute top-2 right-2"/>
+
+    <div class="joke-text mt-6">
       <h3>{{ startText }}</h3>
 
-      <h3 class="spoiler" v-if="isTwoPart">
+      <h3 v-if="isTwoPart" class="spoiler">
         {{ deliveryText }}
       </h3>
 
-      <rating/>
     </div>
+    <rating/>
+
   </div>
 </template>
 
 
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
-import { useJoke } from "../composable/useJoke";
+import { useJoke } from "../composables/useJoke";
 import Rating from "./Rating.vue";
+import Favourite from "./Favourite.vue";
+
+const props = defineProps({
+  id: Number
+})
 
 const { joke, loading, error, fetchJoke } = useJoke();
 
@@ -43,16 +51,15 @@ const deliveryText = computed(() => {
 
 .joke-text {
   @apply overflow-auto;
-  background-color: rgba(76, 175, 80, 0.1); /* Lichte groene achtergrond (primaire kleur met transparantie) */
+  background-color: rgba(76, 175, 80, 0.1);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
 
 .joke-card {
-  @apply flex flex-col;
-  min-width: 250px; /* prevents shrinking on wider screens */
-  max-width: 100%;  /* allow full width in small screens */
+  @apply flex flex-col w-full min-h-full;
+  max-width: 100%;
 }
 
 .joke-text h1 {

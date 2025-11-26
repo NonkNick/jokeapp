@@ -5,11 +5,10 @@ import Joke from "../components/Joke.vue";
 <template>
   <main>
     <div class="flex flex-row space-x-4">
-      <Joke/>
-      <Joke/>
-      <Joke/>
+      <Joke :request="{ id: 42 }"/>
+      <Joke :request="{ id: 43 }"/>
+      <Joke :request="{ id: 1 }"/>
     </div>
-
   </main>
 </template>
 

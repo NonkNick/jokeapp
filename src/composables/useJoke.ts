@@ -14,9 +14,9 @@ export function useJoke() {
         try {
             const jokeClient = new JokeAPI();
             joke.value = await jokeClient.getRandomJoke();
-            console.log(await jokeClient.ping());
-            console.log(await jokeClient.getCategories());
-            console.log(await jokeClient.getFlags());
+            // console.log(await jokeClient.ping());
+            // console.log(await jokeClient.getCategories());
+            // console.log(await jokeClient.getFlags());
 
 
         } catch (err: any) {
