@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-64 bg-green-100 border-r border-green-200 p-4 rounded-lg shadow-md">
+  <aside class="w-48 bg-green-100 border-r border-green-200 p-4 rounded-lg shadow-md">
     <h2 class="font-semibold text-lg mb-4">Jokes</h2>
 
     <nav class="space-y-2">
@@ -18,9 +18,9 @@
       </button>
     </nav>
 
-    <div class="h-24 w-full mt-6 flex items-center justify-center">
-      <Bars3Icon class="w-8 h-8 text-green-700" />
-    </div>
+<!--    <div class="h-24 w-full mt-6 flex items-center justify-center">-->
+<!--      <Bars3Icon class="w-8 h-8 text-green-700" />-->
+<!--    </div>-->
   </aside>
 </template>
 
@@ -42,7 +42,6 @@ const pages = [
 <style scoped>
 @reference "tailwindcss";
 
-/* Optional: ensure buttons don’t shrink on small screens */
 button {
   @apply truncate;
 }

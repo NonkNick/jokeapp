@@ -1,12 +1,13 @@
 <template>
-  <div class="joke-card relative bg-green-100 rounded-lg shadow-md">
-    <Favourite
-        v-if="displayedJoke?.id && !isLocal"
-        :id="displayedJoke.id"
-        class="absolute top-2 right-2"
-    />
+  <div class="joke-card bg-green-100 rounded-lg shadow-md p-2 flex flex-col">
 
-    <div class="joke-text">
+    <div class="joke-text relative">
+      <Favourite
+          v-if="displayedJoke?.id && !isLocal"
+          :id="displayedJoke.id"
+          class="float-right"
+      />
+
       <h3 class="break-words">{{ startText }}</h3>
       <h3 v-if="isTwoPart" class="spoiler break-words">{{ deliveryText }}</h3>
     </div>
@@ -14,7 +15,7 @@
     <Rating
         v-if="displayedJoke?.id && !isLocal"
         :id="displayedJoke.id"
-        class="mt-4"
+        class="pt-1"
     />
   </div>
 </template>
@@ -80,15 +81,14 @@ const deliveryText = computed(() => {
 @reference "tailwindcss";
 
 .joke-text {
-  @apply overflow-y-auto overflow-x-hidden;
+  @apply overflow-y-auto overflow-x-hidden p-3;
   background-color: rgba(76, 175, 80, 0.1);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
 }
 
 .joke-card {
-  @apply flex flex-col w-full max-w-full p-2;
+  @apply flex flex-col w-full max-w-full p-2 max-h-80;
 }
 
 .spoiler {
