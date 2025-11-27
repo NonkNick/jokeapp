@@ -1,6 +1,6 @@
 <template>
-  <aside class="w-64 bg-{white} border-r p-4">
-    <h2 class="font-semibold text-lg mb-4">Joke</h2>
+  <aside class="w-64 bg-green-100 border-r border-green-200 p-4 rounded-lg shadow-md">
+    <h2 class="font-semibold text-lg mb-4">Jokes</h2>
 
     <nav class="space-y-2">
       <button
@@ -8,18 +8,18 @@
           :key="p.key"
           @click="router.push(p.path)"
           :class="[
-          'w-full text-left px-3 py-2 rounded',
+          'w-full text-left px-3 py-2 rounded font-medium transition-colors duration-200',
           route.path === p.path
-            ? 'bg-[#4CAF50] text-white'
-            : 'hover:bg-[#C8E6C9] hover:text-[#1B5E20]'
+            ? 'bg-green-500 text-white shadow'
+            : 'hover:bg-green-200 hover:text-green-900'
         ]"
       >
         {{ p.label }}
       </button>
     </nav>
 
-    <div class="h-24 w-full">
-      <Bars3Icon class="w-full h-full text-black"/>
+    <div class="h-24 w-full mt-6 flex items-center justify-center">
+      <Bars3Icon class="w-8 h-8 text-green-700" />
     </div>
   </aside>
 </template>
@@ -38,3 +38,12 @@ const pages = [
   { key: "about", label: "About", path: "/about" },
 ];
 </script>
+
+<style scoped>
+@reference "tailwindcss";
+
+/* Optional: ensure buttons don’t shrink on small screens */
+button {
+  @apply truncate;
+}
+</style>

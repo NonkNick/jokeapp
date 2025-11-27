@@ -1,33 +1,29 @@
 <template>
-  <div class="w-auto h-10 items-center flex mt-auto">
+  <div class="w-auto h-10 items-center flex mt-auto" v-if="id">
     <StarIcon
-        v-for="(star, index) in rating"
-        :key="index"
-        @click="toggle(index)"
+        v-for="i in 5"
+        :key="i"
+        @click="toggle(i)"
         class="w-full h-full cursor-pointer"
-        :class="star.active ? 'active' : 'inactive'"
+        :class="i <= rating ? 'active' : 'inactive'"
     />
   </div>
-
-
 </template>
 
 <script setup lang="ts">
-import {StarIcon} from '@heroicons/vue/24/solid';
-import {ref} from 'vue';
+import { StarIcon } from "@heroicons/vue/24/solid";
+import { computed } from "vue";
+import { useJokeStorage } from "../composables/useJokeStorage";
 
-const rating = ref([
-  {active: false},
-  {active: false},
-  {active: false},
-  {active: false},
-  {active: false},
-]);
+const props = defineProps<{ id?: number }>();
+const { getRating, setRating } = useJokeStorage();
 
-function toggle(index: number) {
-  rating.value = rating.value.map((_, i) => ({
-    active: i <= index
-  }));
+const rating = computed(() =>
+    props.id ? getRating(props.id) : 0
+);
+
+function toggle(stars: number) {
+  if (props.id) setRating(props.id, stars);
 }
 </script>
 
@@ -37,9 +33,7 @@ function toggle(index: number) {
 .active {
   @apply text-[#F9A825] drop-shadow-md;
 }
-
 .inactive {
   @apply text-[#4CAF5019];
-
 }
 </style>

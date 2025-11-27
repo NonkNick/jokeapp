@@ -1,87 +1,76 @@
 <template>
-  <div class="p-4 bg-gray-100 rounded-lg shadow space-y-4">
-    <h2 class="text-lg font-semibold">Filter Jokes</h2>
+  <div>
+    <h3>Joke Filter</h3>
 
-    <!-- Categories -->
-    <div v-if="categories.length">
-      <label class="block font-medium mb-1">Categories</label>
-      <select multiple class="w-full p-2 rounded border" v-model="selectedCategories">
-        <option v-for="c in categories" :key="c" :value="c">{{ c }}</option>
-      </select>
-    </div>
-
-    <!-- Flags -->
-    <div v-if="flags.length">
-      <label class="block font-medium mb-1">Exclude Flags</label>
-      <select multiple class="w-full p-2 rounded border" v-model="selectedFlags">
-        <option v-for="f in flags" :key="f" :value="f">{{ f }}</option>
-      </select>
-    </div>
-
-    <!-- Joke Type -->
     <div>
-      <label class="block font-medium mb-1">Joke Type</label>
-      <select class="w-full p-2 rounded border" v-model="selectedType">
+      <label>Categories:</label>
+      <select v-model="selected.categories" multiple>
+        <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Flags (exclude):</label>
+      <select v-model="selected.excludeFlags" multiple>
+        <option v-for="flag in flags" :key="flag" :value="flag">{{ flag }}</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Type:</label>
+      <select v-model="selected.type">
         <option value="any">Any</option>
-        <option value="single">Single</option>
-        <option value="twopart">Two-Part</option>
+        <option :value="JokeType.SINGLE">Single</option>
+        <option :value="JokeType.TWOPART">Two-part</option>
       </select>
     </div>
 
-    <!-- Language -->
     <div>
-      <label class="block font-medium mb-1">Language</label>
-      <select class="w-full p-2 rounded border" v-model="selectedLang">
-        <option value="">Any</option>
-        <option value="en">English</option>
-        <option value="de">German</option>
-        <option value="cs">Czech</option>
-        <option value="es">Spanish</option>
-        <option value="fr">French</option>
-        <option value="pt">Portuguese</option>
+      <label>Language:</label>
+      <select v-model="selected.lang">
+        <option v-for="(name, code) in languageOptions" :key="code" :value="code">{{ name }}</option>
       </select>
     </div>
 
-    <!-- Contains text -->
     <div>
-      <label class="block font-medium mb-1">Contains text</label>
-      <input
-          type="text"
-          class="w-full p-2 rounded border"
-          v-model="contains"
-          placeholder="Keyword..."
-      />
+      <label>Safe only:</label>
+      <input type="checkbox" v-model="selected.safeOnly" />
     </div>
-
-    <!-- Safe Mode -->
-    <div>
-      <label class="flex items-center space-x-2 cursor-pointer">
-        <input type="checkbox" v-model="safeMode" />
-        <span>Safe Mode</span>
-      </label>
-    </div>
-
-    <!-- Apply -->
-    <button
-        class="px-4 py-2 bg-green-600 text-white rounded shadow hover:bg-green-700"
-        @click="emitFilter"
-    >
-      Apply Filter
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { JokeAPI } from "@bitstep/jokeapi";
-import type { JokeRequest, JokeFilter } from "../composables/useJoke";
+import { reactive, watchEffect } from "vue";
+import { JokeCategory, JokeFlag, JokeType, JokeLanguage } from "@bitstep/jokeapi";
+import type { JokeFilter } from "../composables/useJoke";
 
-const emit = defineEmits<["update"]>();
+const languageOptions: Record<JokeLanguage, string> = {
+  en: "English",
+  cs: "Czech",
+  de: "German",
+  it: "Italian",
+  ru: "Russian",
+  es: "Spanish",
+  fr: "French",
+  pt: "Portuguese"
+};
 
-// state
-const categories = ref<string[]>([]);
-const flags = ref<string[]>([]);
+const categories = Object.values(JokeCategory);
+const flags = Object.values(JokeFlag);
 
-const selectedCategories = ref<string[]>([]);
-const selectedFlags = ref<string[]>([]);
-cons
+const selected = reactive<JokeFilter>({
+  categories: [JokeCategory.ANY],
+  excludeFlags: [],
+  type: "any",
+  lang: JokeLanguage.English,
+  safeOnly: false,
+  amount: undefined,
+  contains: ""
+});
+
+const emit = defineEmits<{ "update:filters": (filters: JokeFilter) => void }>();
+
+watchEffect(() => {
+  emit("update:filters", selected);
+});
+</script>
