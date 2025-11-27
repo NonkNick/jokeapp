@@ -1,12 +1,12 @@
 <template>
-  <div class="joke-card relative p-4 bg-green-100 rounded-lg shadow-md">
+  <div class="joke-card relative bg-green-100 rounded-lg shadow-md">
     <Favourite
         v-if="displayedJoke?.id && !isLocal"
         :id="displayedJoke.id"
         class="absolute top-2 right-2"
     />
 
-    <div class="joke-text mt-6">
+    <div class="joke-text">
       <h3 class="break-words">{{ startText }}</h3>
       <h3 v-if="isTwoPart" class="spoiler break-words">{{ deliveryText }}</h3>
     </div>
@@ -88,8 +88,7 @@ const deliveryText = computed(() => {
 }
 
 .joke-card {
-  @apply flex flex-col w-full min-h-full max-w-full max-h-[28rem] px-0;
-  padding-top: 2rem;
+  @apply flex flex-col w-full max-w-full p-2;
 }
 
 .spoiler {
