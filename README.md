@@ -1,5 +1,19 @@
 # JokeApp
 
+### Installatie
+
+Installatie als volgt
+npm install
+npm run dev
+
+
+
+
+
+
+
+
+
 ## Doel
 Je bouwt een Vue.js-applicatie waarin je grappen ophaalt via de JokeAPI, je eigen grappen kunt toevoegen, en favorieten kunt beheren in localStorage. De app bevat meerdere pagina’s met Vue Router en is volledig geschreven in TypeScript. Je leert werken met API’s, routing, localStorage, filters, componenten en typedeclaraties.
 

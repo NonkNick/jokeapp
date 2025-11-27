@@ -4,7 +4,7 @@
         v-for="i in 5"
         :key="i"
         @click="toggle(i)"
-        class="w-full h-full cursor-pointer"
+        class="w-full h-full cursor-pointer hover-animation"
         :class="i <= rating ? 'active' : 'inactive'"
     />
   </div>

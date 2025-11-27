@@ -2,7 +2,7 @@
   <div class="w-10 h-10 flex items-center mt-auto" v-if="id">
     <HeartIcon
         @click="toggle"
-        class="w-full h-full cursor-pointer"
+        class="w-full h-full cursor-pointer hover-animation"
         :class="active ? 'active' : 'inactive'"
     />
   </div>
